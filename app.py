@@ -20,14 +20,14 @@ def send_welcome(message):
 def send_result(message):
     num_message = message.text
     result = palindrome(int(num_message))
-    if result['solvable'] == True:
+    if result['solvable'] == True and result['is_ready'] == False:
         #send if solvable
         bot.reply_to(message=message,
         text=result['text'],
         parse_mode='MarkdownV2')
 
 
-    else:
+    elif result['solvable'] == False and result['is_ready'] == False:
         
         steps_button = telebot.types.InlineKeyboardButton('See all of the steps', callback_data="steps")
         long_num_button = telebot.types.InlineKeyboardButton('See the reached number in step 300', callback_data="num")
@@ -37,6 +37,9 @@ def send_result(message):
         text=f"``` The number {num_message} is probably a lychrel number. ```",
         parse_mode='MarkdownV2',
         reply_markup=result_markup)
+    elif result['is_ready'] == True:
+        bot.reply_to(message=message,
+        text=f"The number {num_message} is already a numeral palindrome")
 
 
 @bot.callback_query_handler(func= lambda callback: callback.data in ['steps', 'num', 'back'])

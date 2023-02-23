@@ -3,6 +3,8 @@ def palindrome(num):
     n1_r = int(str(n1)[::-1])
     lis_nums = []
     steps = 0
+    if n1 == n1_r:
+        return {'text':"", 'solvable':True, 'reached_num':n1_r, 'is_ready':True}
     while n1 != n1_r:
         lis_nums.append((n1, n1_r, n1+n1_r))
         n1 = n1 + n1_r
@@ -23,10 +25,10 @@ def palindrome(num):
         exc = "``` \n\.\.\. not solved"
         result = f"``` {result}"[0:2000] + "\.\.\."
         result += exc
-        return {'text':result, 'solvable':False, 'reached_num':n1_r}
+        return {'text':result, 'solvable':False, 'reached_num':n1_r, 'is_ready':False}
     #when solved
     else:
         exc = f" ``` \nthe answer is {n1_r}"
         result = f"``` {result}"[0:4096-len(exc)]
         result += exc
-        return {'text':result, 'solvable':True, 'reached_num':n1_r}
+        return {'text':result, 'solvable':True, 'reached_num':n1_r, 'is_ready':False}
