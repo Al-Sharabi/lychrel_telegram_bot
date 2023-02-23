@@ -62,7 +62,7 @@ def lychrel_callback_handler(callback):
 
 
     if callback.data == 'num':
-        bot.edit_message_text(text=f"The number that was reached for {num_ber}:\n ``` {result['reached_num']} ```",
+        bot.edit_message_text(text=f"The number that was reached for {num_ber} in the 300th step:\n ``` {result['reached_num']} ```",
         message_id=msg_id,
         chat_id=msg_chat_id,
         parse_mode='MarkdownV2',
