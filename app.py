@@ -80,6 +80,11 @@ def lychrel_callback_handler(callback):
         chat_id=msg_chat_id,
         parse_mode='MarkdownV2',
         reply_markup=result_markup)
-    
+
+
+##Any other message
+@bot.message_handler(func= lambda msg: msg.text.isdigit() == False)
+def reply_any_message(message):
+    bot.reply_to(message=message, text=welcome_message)
 
 bot.infinity_polling()
