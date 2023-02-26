@@ -18,7 +18,7 @@ def send_welcome(message):
 
 @bot.message_handler(func= lambda msg: msg.text.isdigit())
 def send_result(message):
-    if len(message.text) < 100:
+    if len(message.text) < 200:
         num_message = message.text
         result = palindrome(int(num_message))
         if result['solvable'] == True and result['is_ready'] == False:
