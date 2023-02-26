@@ -18,29 +18,31 @@ def send_welcome(message):
 
 @bot.message_handler(func= lambda msg: msg.text.isdigit())
 def send_result(message):
-    num_message = message.text
-    result = palindrome(int(num_message))
-    if result['solvable'] == True and result['is_ready'] == False:
-        #send if solvable
-        bot.reply_to(message=message,
-        text=result['text'],
-        parse_mode='MarkdownV2')
+    if len(message.text) < 100:
+        num_message = message.text
+        result = palindrome(int(num_message))
+        if result['solvable'] == True and result['is_ready'] == False:
+            #send if solvable
+            bot.reply_to(message=message,
+            text=result['text'],
+            parse_mode='MarkdownV2')
 
 
-    elif result['solvable'] == False and result['is_ready'] == False:
-        
-        steps_button = telebot.types.InlineKeyboardButton('See all of the steps', callback_data="steps")
-        long_num_button = telebot.types.InlineKeyboardButton('See the reached number in step 300', callback_data="num")
-        result_markup = telebot.types.InlineKeyboardMarkup([[steps_button],[long_num_button]])
-        
-        bot.reply_to(message=message,
-        text=f"``` The number {num_message} is probably a lychrel number. ```",
-        parse_mode='MarkdownV2',
-        reply_markup=result_markup)
-    elif result['is_ready'] == True:
-        bot.reply_to(message=message,
-        text=f"The number {num_message} is already a numeral palindrome")
-
+        elif result['solvable'] == False and result['is_ready'] == False:
+            
+            steps_button = telebot.types.InlineKeyboardButton('See all of the steps', callback_data="steps")
+            long_num_button = telebot.types.InlineKeyboardButton('See the reached number in step 300', callback_data="num")
+            result_markup = telebot.types.InlineKeyboardMarkup([[steps_button],[long_num_button]])
+            
+            bot.reply_to(message=message,
+            text=f"``` The number {num_message} is probably a lychrel number. ```",
+            parse_mode='MarkdownV2',
+            reply_markup=result_markup)
+        elif result['is_ready'] == True:
+            bot.reply_to(message=message,
+            text=f"The number {num_message} is already a numeral palindrome")
+    else:
+        bot.reply_to(message, "Number is too big.")
 
 @bot.callback_query_handler(func= lambda callback: callback.data in ['steps', 'num', 'back'])
 def lychrel_callback_handler(callback):
